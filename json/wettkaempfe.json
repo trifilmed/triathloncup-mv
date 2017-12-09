@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Güstrower Triathlon",
+        "landesmeisterschaft": false,
+        "jahr": 2017
+    },
+    {
+        "name": "Warener Triathlon",
+        "landesmeisterschaft": false,
+        "jahr": 2017
+    },
+    {
+        "name": "Rostocker Triathlon",
+        "landesmeisterschaft": true,
+        "jahr": 2017
+    }
+]
