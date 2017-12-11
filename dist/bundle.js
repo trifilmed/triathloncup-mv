@@ -70,18 +70,31 @@
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Main", function() { return Main; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__importer__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__repository__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__berechner__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__importer__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__repository__ = __webpack_require__(3);
+
 
 
 var Main = /** @class */ (function () {
     function Main() {
     }
     Main.prototype.makeCupBerechnung = function () {
-        var importer = new __WEBPACK_IMPORTED_MODULE_0__importer__["a" /* CSVErgebnisImporter */]();
-        var repository = __WEBPACK_IMPORTED_MODULE_1__repository__["a" /* RepositoryFactory */].makeRepository('json');
+        var importer = new __WEBPACK_IMPORTED_MODULE_1__importer__["a" /* CSVErgebnisImporter */]();
+        var repository = __WEBPACK_IMPORTED_MODULE_2__repository__["a" /* RepositoryFactory */].makeRepository('json');
         var wettkaempfe = repository.getWettkaempfe();
-        console.log(wettkaempfe);
+        // importiere ergebnisse falls noch nicht vorhanden
+        for (var i = 0; i < wettkaempfe.length; i++) {
+            var wettkampfErgebnis = void 0;
+            var importer_1 = new __WEBPACK_IMPORTED_MODULE_1__importer__["a" /* CSVErgebnisImporter */]();
+            if (!wettkaempfe[i].getErgebnis()) {
+                var pfadZumCsvErgebnis = wettkaempfe[i].getName().toLocaleLowerCase().replace(' ', '_') + '.csv';
+                wettkampfErgebnis = importer_1.import(pfadZumCsvErgebnis);
+                wettkaempfe[i].setErgebnis(wettkampfErgebnis);
+            }
+        }
+        var berechner = __WEBPACK_IMPORTED_MODULE_0__berechner__["a" /* BerechnerFactory */].makeBerechner(2017);
+        var cupErgebnis = berechner.berechne(wettkaempfe);
     };
     return Main;
 }());
@@ -95,14 +108,53 @@ main.makeCupBerechnung();
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CSVErgebnisImporter; });
-var CSVErgebnisImporter = /** @class */ (function () {
-    function CSVErgebnisImporter() {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BerechnerFactory; });
+/* unused harmony export Berechner2017 */
+var BerechnerFactory = /** @class */ (function () {
+    function BerechnerFactory() {
     }
-    CSVErgebnisImporter.prototype.import = function (source) {
-        // create all the elements from csv
+    BerechnerFactory.makeBerechner = function (jahr) {
+        if (jahr == 2017) {
+            return new Berechner2017();
+        }
+        else {
+            throw Error;
+        }
     };
-    return CSVErgebnisImporter;
+    return BerechnerFactory;
+}());
+
+var Berechner2017 = /** @class */ (function () {
+    function Berechner2017() {
+        this.punkteListe = [50, 40, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2];
+        // private wettkampfpunkte()
+    }
+    Berechner2017.prototype.berechne = function (wettkaempfe) {
+        for (var i = 0; i < wettkaempfe.length; i++) {
+            var wettkampf = wettkaempfe[i];
+            var ergebnis = wettkaempfe[i].getErgebnis();
+            for (var _i = 0, ergebnis_1 = ergebnis; _i < ergebnis_1.length; _i++) {
+                var ergebniseZeile = ergebnis_1[_i];
+                var athlet = ergebniseZeile.getAthlet();
+                var platzierung = ergebniseZeile.getAkPlatzierung();
+                console.log(this.anzahlAthletenEinerAk(athlet.getAltersklasse(), wettkaempfe[i]));
+            }
+        }
+    };
+    Berechner2017.prototype.anzahlAthletenEinerAk = function (ak, wettkampf) {
+        var athletenEinerAk = [];
+        var ergebnis = wettkampf.getErgebnis();
+        var anzahl = 0;
+        for (var _i = 0, ergebnis_2 = ergebnis; _i < ergebnis_2.length; _i++) {
+            var ergebniseZeile = ergebnis_2[_i];
+            var athlet = ergebniseZeile.getAthlet();
+            if (athlet.getAltersklasse() == ak) {
+                anzahl++;
+            }
+        }
+        return anzahl;
+    };
+    return Berechner2017;
 }());
 
 
@@ -112,9 +164,25 @@ var CSVErgebnisImporter = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CSVErgebnisImporter; });
+var CSVErgebnisImporter = /** @class */ (function () {
+    function CSVErgebnisImporter() {
+    }
+    CSVErgebnisImporter.prototype.import = function (source) {
+    };
+    return CSVErgebnisImporter;
+}());
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RepositoryFactory; });
 /* unused harmony export JSONRepository */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wettkampf__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wettkampf__ = __webpack_require__(4);
 
 var RepositoryFactory = /** @class */ (function () {
     function RepositoryFactory() {
@@ -150,7 +218,6 @@ var JSONRepository = /** @class */ (function () {
         ];
         var wettkaempfe = [];
         for (var i = 0; i < jsonWettkaempfe.length; i++) {
-            console.log(i);
             var wettkampf = new __WEBPACK_IMPORTED_MODULE_0__wettkampf__["a" /* KonkreterWettkampf */](jsonWettkaempfe[i].name, jsonWettkaempfe[i].landesmeisterschaft, jsonWettkaempfe[i].jahr);
             wettkaempfe.push(wettkampf);
         }
@@ -162,7 +229,7 @@ var JSONRepository = /** @class */ (function () {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

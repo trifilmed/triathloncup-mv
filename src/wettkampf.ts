@@ -1,4 +1,4 @@
-import { Ergebnis } from "./ergebnis";
+import { Ergebnis, WettkampfErgebnis } from "./ergebnis";
 
 export interface Wettkampf {
     setName(name: string): void;
@@ -9,14 +9,14 @@ export interface Wettkampf {
     getName(): string;
     getLandesmeisterschaft(): boolean;
     getJahr(): number;
-    getErgebnis(): Array<Ergebnis>;
+    getErgebnis(): Array<WettkampfErgebnis>;
 }
 
 export class KonkreterWettkampf implements Wettkampf {
     private name: string;
     private landesmeisterschaft: boolean;
     private jahr: number;
-    private ergebnis: Array<Ergebnis>;
+    private ergebnis: Array<WettkampfErgebnis>;
 
     constructor(name: string, landesmeisterschaft: boolean, jahr: number) {
         this.name = name;
@@ -37,7 +37,7 @@ export class KonkreterWettkampf implements Wettkampf {
         this.jahr = jahr;
     }
 
-    setErgebnis(ergebnis: Array<Ergebnis>) {
+    setErgebnis(ergebnis: Array<WettkampfErgebnis>) {
         this.ergebnis = ergebnis;
     }
         
@@ -53,7 +53,7 @@ export class KonkreterWettkampf implements Wettkampf {
         return this.jahr;
     }
     
-    getErgebnis(): Array<Ergebnis> {
+    getErgebnis(): Array<WettkampfErgebnis> {
         return this.ergebnis;
     }
 }
