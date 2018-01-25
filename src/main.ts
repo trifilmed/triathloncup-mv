@@ -4,22 +4,21 @@ import { ErgebnisImporter, CSVErgebnisImporter } from './importer';
 import { RepositoryFactory, Repository } from './repository';
 import { Wettkampf } from './wettkampf';
 import { Ergebnis, CupErgebnis } from './ergebnis';
+import { config } from './../config';
 
 export class Main {
     public makeCupBerechnung(): void {
-        let importer: ErgebnisImporter = new CSVErgebnisImporter();
-
+        let pfadZumErgebnisOrdner: string = config.pfadZumErgebnisOrdner;
+        let importer: ErgebnisImporter = new CSVErgebnisImporter(pfadZumErgebnisOrdner);
         let repository: Repository = RepositoryFactory.makeRepository('json');
         let wettkaempfe: Array<Wettkampf> = repository.getWettkaempfe();
 
         // importiere ergebnisse falls noch nicht vorhanden
         for(let i = 0; i < wettkaempfe.length; i++) {
             let wettkampfErgebnis: Array<Ergebnis>;
-            let importer: ErgebnisImporter = new CSVErgebnisImporter();
 
             if(!wettkaempfe[i].getErgebnis()) {
-                let pfadZumCsvErgebnis: string = wettkaempfe[i].getName().toLocaleLowerCase().replace(' ', '_') + '.csv'
-                wettkampfErgebnis = importer.import(pfadZumCsvErgebnis);
+                wettkampfErgebnis = importer.import(wettkaempfe[i].getErgebnisDateiName());
                 wettkaempfe[i].setErgebnis(wettkampfErgebnis);
             }
         }
