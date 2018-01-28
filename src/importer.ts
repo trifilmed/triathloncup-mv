@@ -1,4 +1,5 @@
-import { Ergebnis } from "./ergebnis";
+import { Ergebnis, WettkampfErgebnis } from "./ergebnis";
+import { Athlet } from "./athlet";
 import * as csv from "csvtojson";
 import * as path from "path";
 import * as fs from "fs";
@@ -14,11 +15,20 @@ export class CSVErgebnisImporter implements ErgebnisImporter {
 
         csv({noheader: false})
             .fromFile(pathName)
-            .on('json', (jsonObj: any) => {
-                console.log(jsonObj);
+            .on('json', (data: any) => {
+                for(let key in data) {
+                    console.log(key);
+                }
             })
             .on('done', (error: any) => {
-                console.log('end');
+                if(error) {
+                    console.log(error);
+                }
+                console.log('done with importing');
             });
+    }
+    
+    private athletExistiert() {
+        
     }
 }
