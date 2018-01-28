@@ -20,16 +20,13 @@ export class KonkreterWettkampf implements Wettkampf {
     private landesmeisterschaft: boolean;
     private jahr: number;
     private ergebnisDateiName: string;
-    private ergebnis: Array<WettkampfErgebnis>;
+    private ergebnis: Array<WettkampfErgebnis> = [];
 
     constructor(name: string, landesmeisterschaft: boolean, jahr: number, ergebnisDateiName: string) {
         this.name = name;
         this.landesmeisterschaft = landesmeisterschaft;
         this.jahr = jahr;
         this.ergebnisDateiName = ergebnisDateiName;
-
-        let importer = new CSVErgebnisImporter();
-        this.ergebnis = importer.import(this.ergebnisDateiName)
     }
 
     setName(name: string): void {

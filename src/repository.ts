@@ -19,7 +19,7 @@ export class JSONRepository implements Repository {
             "name": "Güstrower Triathlon",
             "landesmeisterschaft": false,
             "jahr": 2017,
-            "dateiname": "guestrow"
+            "dateiname": "test"
         }
         // },
         // {

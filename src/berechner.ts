@@ -28,7 +28,8 @@ export class Berechner2017 implements Berechner {
             for(let ergebniseZeile of ergebnis) {
                 let athlet: Athlet = ergebniseZeile.getAthlet();
                 let platzierung: number = ergebniseZeile.getAkPlatzierung();
-                console.log(this.anzahlAthletenEinerAk(athlet.getAltersklasse(),wettkaempfe[i]));
+
+                console.log(athlet, platzierung);
             }       
         }
     }

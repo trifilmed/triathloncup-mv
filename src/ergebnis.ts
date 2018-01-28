@@ -13,11 +13,21 @@ export interface PunkteZuordnung {
 export class CupErgebnis implements Ergebnis {
     private athlet: Athlet;
     private punkteZuordnung: Array<PunkteZuordnung>;
+
+    constructor(athlet: Athlet, punkteZuordnung: Array<PunkteZuordnung>) {
+        this.athlet = athlet;
+        this.punkteZuordnung = punkteZuordnung;
+    }
 }
 
 export class WettkampfErgebnis implements Ergebnis {
     private athlet: Athlet;
     private akPlatzierung: number;
+
+    constructor(athlet: Athlet, akPlatzierung: number) {
+        this.athlet = athlet;
+        this.akPlatzierung = akPlatzierung;
+    }
 
     public setAthlet(athlet: Athlet): void {
         this.athlet = athlet;

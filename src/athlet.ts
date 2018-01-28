@@ -13,9 +13,9 @@ export class KonkreterAthlet implements Athlet {
     private vorname: string;
     private altersklasse: string;
 
-    constructor(name: string, vorname: string, altersklasse: string) {
-        this.name = name;
+    constructor(vorname: string, nachname: string, altersklasse: string) {
         this.vorname = vorname;
+        this.name = nachname;
         this.altersklasse = altersklasse;
     }
 
