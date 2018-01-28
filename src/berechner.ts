@@ -21,15 +21,23 @@ export class Berechner2017 implements Berechner {
     private punkteListe: Array<number> = [50,40,34,32,30,28,26,24,22,20,18,16,14,12,10,8,6,4,2];
 
     public berechne(wettkaempfe: Array<Wettkampf>): Array<CupErgebnis> {
+        let cupErgebnis: Array<CupErgebnis> = [];
+
         for(let i = 0; i < wettkaempfe.length; i++) {
             let wettkampf:Wettkampf = wettkaempfe[i];
-            let ergebnis: Array<WettkampfErgebnis> = wettkaempfe[i].getErgebnis();
+            let wettkampfErgebnis: Array<WettkampfErgebnis> = wettkaempfe[i].getErgebnis();
             
-            for(let ergebniseZeile of ergebnis) {
+            for(let ergebniseZeile of wettkampfErgebnis) {
                 let athlet: Athlet = ergebniseZeile.getAthlet();
                 let platzierung: number = ergebniseZeile.getAkPlatzierung();
+                let platzierungspunkte: number = 0;
+                let konkurrenzpunkte: number = this.anzahlAthletenEinerAk(athlet.getAltersklasse(),wettkampf) - platzierung;
 
-                console.log(athlet, platzierung);
+                if(platzierung <= 20) {
+                    platzierungspunkte = this.punkteListe[platzierung - 1];
+                }
+
+                console.log(athlet, platzierungspunkte, konkurrenzpunkte);
             }       
         }
     }
@@ -49,6 +57,4 @@ export class Berechner2017 implements Berechner {
 
         return anzahl;
     }
-
-    // private wettkampfpunkte()
 }

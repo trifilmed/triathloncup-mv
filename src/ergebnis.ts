@@ -5,7 +5,7 @@ export interface Ergebnis {
 
 }
 
-export interface PunkteZuordnung {
+export class PunkteZuordnung {
     wettkampf: Wettkampf;
     punkte: number;
 }
