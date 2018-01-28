@@ -20,19 +20,20 @@ export class JSONRepository implements Repository {
             "landesmeisterschaft": false,
             "jahr": 2017,
             "dateiname": "guestrow"
-        },
-        {
-            "name": "Warener Triathlon",
-            "landesmeisterschaft": false,
-            "jahr": 2017,
-            "dateiname": "warenTriathlon"
-        },
-        {
-            "name": "Rostocker Triathlon",
-            "landesmeisterschaft": true,
-            "jahr": 2017,
-            "dateiname": "rostockerTriathlon"
         }
+        // },
+        // {
+        //     "name": "Warener Triathlon",
+        //     "landesmeisterschaft": false,
+        //     "jahr": 2017,
+        //     "dateiname": "warenTriathlon"
+        // },
+        // {
+        //     "name": "Rostocker Triathlon",
+        //     "landesmeisterschaft": true,
+        //     "jahr": 2017,
+        //     "dateiname": "rostockerTriathlon"
+        // }
     ];
 
     let wettkaempfe: Array<Wettkampf> = [];

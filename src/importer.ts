@@ -1,5 +1,7 @@
 import { Ergebnis } from "./ergebnis";
 import * as csv from "csvtojson";
+import * as path from "path";
+import * as fs from "fs";
 
 export interface ErgebnisImporter {
     import(source: string): Array<Ergebnis>;
@@ -7,26 +9,16 @@ export interface ErgebnisImporter {
 
 export class CSVErgebnisImporter implements ErgebnisImporter {
 
-    constructor() { /* no op */ }
-
     public import(source: string): Array<WettkampfErgebnis> {
-        console.log(source);
-        
-        csv({noheader: true})
-            .fromFile(source)
+        let pathName = path.join(__dirname, '../csv/' + source + '.csv');
+
+        csv({noheader: false})
+            .fromFile(pathName)
             .on('json', (jsonObj: any) => {
                 console.log(jsonObj);
             })
-             .on('done', (error: any) => {
+            .on('done', (error: any) => {
                 console.log('end');
             });
-        // csvtojson()
-        //     .fromFile(this.folder)
-        //     .on('json', (jsonObj: any) => {
-        //         console.log(jsonObj);
-        //     })
-        //     .on('done', (error: any) => {
-        //         console.log('end');
-        //     })
     }
 }

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine",
+    "build": "tsify main.ts -p [ tsify --noImplicitAny ] > dist/bundle.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,8 +13,12 @@
     "@types/csvtojson": "^1.1.5",
     "@types/jsonfile": "^4.0.1",
     "@types/mongodb": "^2.2.18",
+    "csvjson": "^5.0.0",
     "csvtojson": "^1.1.9",
+    "express": "^4.16.2",
     "fs": "0.0.1-security",
+    "grunt": "^1.0.1",
+    "grunt-ts": "^6.0.0-beta.17",
     "jsonfile": "^4.0.0",
     "mongodb": "^3.0.0-rc0",
     "mongoose": "^4.13.7",
@@ -22,7 +27,12 @@
     "typescript": "^2.6.2"
   },
   "devDependencies": {
+    "@types/browserify": "^12.0.33",
+    "@types/jasmine": "^2.8.6",
     "@types/mongoose": "^4.7.30",
+    "browserify": "^15.2.0",
+    "jasmine": "^2.9.0",
+    "tsify": "^3.0.4",
     "webpack": "^3.9.1"
   }
 }
