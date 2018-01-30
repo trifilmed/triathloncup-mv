@@ -50,9 +50,35 @@ export class Berechner2017 implements Berechner {
             }       
         }
 
-        // Alle Landesmeisterschaften in ein Array
-        // Alle Nicht-Landesmeisterschafen in ein zweites Array
+        for(let cupErgebnis of cupErgebnisArray) {
+            let punkteZuOrdnungsArray: Array<PunkteZuordnung> = cupErgebnis.getPunkteZuordnung();
+            let landesmeisterschaftsArray: Array<PunkteZuordnung> = [];
+            let nichtLandesmeisterschaftsArray: Array<PunkteZuordnung> = [];
+
+            for(let zuordnung of punkteZuOrdnungsArray) {
+                let wettkampf: Wettkampf = zuordnung.getWettkampf();
+                
+                if(wettkampf.getLandesmeisterschaft()) {
+                    landesmeisterschaftsArray.push(zuordnung);
+                } else {
+                    nichtLandesmeisterschaftsArray.push(zuordnung);
+                }
+            }
+
+            landesmeisterschaftsArray.sort((a,b) => {
+                return a - b;
+            });
+
+            nichtLandesmeisterschaftsArray.sort((a,b) => {
+                return a - b;
+            });
+
+
+        }
+        // Alle Landesmeisterschaften in ein Array & sortieren
+        // Alle Nicht-Landesmeisterschafen in ein zweites Array & sortieren
         // Wenn Landesmeisterschafts-Array > 3, dann die übrigen in Nicht-Landesmeisterschaftsarray
+        // Elemente in Landesmeisterschafts-Array verdoppeln
         // Beide Arrays konkatenieren, sortieren und nach 9 abschneiden
         console.log(cupErgebnisArray[0].getPunkteZuordnung());
     }
