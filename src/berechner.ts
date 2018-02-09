@@ -100,12 +100,6 @@ export class Berechner2017 implements Berechner {
             cupErgebnis.setPunkteZuordnungNachBerechnung(allePunkteZuordnungenEinesAthleten);
         }
 
-        for (let cupe of cupErgebnisArray) {
-            console.log(cupe.getAthlet());
-            console.log(cupe.getGesamtPunkte());
-            console.log(cupe.getPunkteZuordnungNachBerechnung());
-        }
-
         return cupErgebnisArray;
     }
 
