@@ -17,6 +17,17 @@ export interface Berechner {
     berechne(wettkaempfe: Array<Wettkampf>): Array<CupErgebnis>;
 }
 
+/*
+    Wertungsmodus 2017
+    Die 9 besten Wettkämpfe, wovon maximal die besten drei LM doppelt gewertet werden
+
+    Vorgehen:
+    Alle Landesmeisterschaften in ein Array & sortieren
+    Alle Nicht-Landesmeisterschafen in ein zweites Array & sortieren
+    Wenn Landesmeisterschafts-Array > 3, dann die übrigen in Nicht-Landesmeisterschaftsarray
+    Elemente in Landesmeisterschafts-Array verdoppeln
+    Beide Arrays konkatenieren, sortieren und nach 9 abschneiden
+*/
 export class Berechner2017 implements Berechner {
     private punkteListe: Array<number> = [50, 40, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2];
 
@@ -25,7 +36,7 @@ export class Berechner2017 implements Berechner {
 
         /*
             Erstellen der CupErgebnisse:
-                Beinhalten für jeden Athleten die Punkte die er im einzelnen Wettkampf erlangt hat.
+            Beinhalten für jeden Athleten die Punkte die er im einzelnen Wettkampf erlangt hat.
         */
         for (let i = 0; i < wettkaempfe.length; i++) {
             let wettkampf: Wettkampf = wettkaempfe[i];
@@ -88,22 +99,15 @@ export class Berechner2017 implements Berechner {
             cupErgebnis.setGesamtPunkte(gesamtPunkte);
             cupErgebnis.setPunkteZuordnungNachBerechnung(allePunkteZuordnungenEinesAthleten);
         }
-        // Alle Landesmeisterschaften in ein Array & sortieren
-        // Alle Nicht-Landesmeisterschafen in ein zweites Array & sortieren
-        // Wenn Landesmeisterschafts-Array > 3, dann die übrigen in Nicht-Landesmeisterschaftsarray
-        // Elemente in Landesmeisterschafts-Array verdoppeln
-        // Beide Arrays konkatenieren, sortieren und nach 9 abschneiden
+
         for (let cupe of cupErgebnisArray) {
             console.log(cupe.getAthlet());
             console.log(cupe.getGesamtPunkte());
             console.log(cupe.getPunkteZuordnungNachBerechnung());
         }
-    }
 
-    /*
-    Wertungsmodus 2017
-    Die 9 besten Wettkämpfe, wovon maximal die besten drei LM doppelt gewertet werden
-    */
+        return cupErgebnisArray;
+    }
 
     private anzahlAthletenEinerAk(ak: string, wettkampf: Wettkampf): number {
         let athletenEinerAk: Array<Athlet> = [];
