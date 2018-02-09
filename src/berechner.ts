@@ -79,6 +79,10 @@ export class Berechner2017 implements Berechner {
                 nichtLandesmeisterschaftsArray.concat(zuNichtLandesmeisterschaftHinzufuegen);
             }
 
+            landesmeisterschaftsArray.map((a) => {
+                a.setPunkte(a.getPunkte() * 2);
+            });
+
             nichtLandesmeisterschaftsArray.sort((a: any, b: any) => {
                 return a - b;
             });
