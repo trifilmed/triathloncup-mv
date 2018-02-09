@@ -69,9 +69,7 @@ export class Berechner2017 implements Berechner {
                 }
             }
 
-            landesmeisterschaftsArray.sort((a: any, b: any) => {
-                return a - b;
-            });
+            this.sortiereArrayAbsteigend(landesmeisterschaftsArray);
 
             if (landesmeisterschaftsArray.length > 3) {
                 let zuNichtLandesmeisterschaftHinzufuegen: Array<PunkteZuordnung> = landesmeisterschaftsArray.slice(3);
@@ -79,20 +77,13 @@ export class Berechner2017 implements Berechner {
                 nichtLandesmeisterschaftsArray.concat(zuNichtLandesmeisterschaftHinzufuegen);
             }
 
-            landesmeisterschaftsArray.map((a) => {
-                a.setPunkte(a.getPunkte() * 2);
-            });
+            this.sortiereArrayAbsteigend(nichtLandesmeisterschaftsArray);
 
-            nichtLandesmeisterschaftsArray.sort((a: any, b: any) => {
-                return a - b;
-            });
+            this.multiplizierePunkteInZuordnungsArray(landesmeisterschaftsArray,2);
 
             let allePunkteZuordnungenEinesAthleten: Array<PunkteZuordnung> = landesmeisterschaftsArray.concat(nichtLandesmeisterschaftsArray);
 
-            let gesamtPunkte: number = 0;
-            allePunkteZuordnungenEinesAthleten.map((a) => {
-                gesamtPunkte += a.getPunkte();
-            });
+            let gesamtPunkte: number = this.berechneGesamtpunkte(allePunkteZuordnungenEinesAthleten);
 
             cupErgebnis.setGesamtPunkte(gesamtPunkte);
             cupErgebnis.setPunkteZuordnungNachBerechnung(allePunkteZuordnungenEinesAthleten);
@@ -137,5 +128,27 @@ export class Berechner2017 implements Berechner {
                 return ergebnis;
             }
         }
+    }
+
+    private sortiereArrayAbsteigend(arr: Array<any>):  void {
+        arr.sort((a: any, b: any) => {
+            return a - b;
+        });
+    }
+
+    private berechneGesamtpunkte(punkteZuordnungen: Array<PunkteZuordnung>): number {
+        let gesamtPunkte: number = 0;
+
+        punkteZuordnungen.map((a) => {
+            gesamtPunkte += a.getPunkte();
+        });
+
+        return gesamtPunkte;
+    }
+
+    private multiplizierePunkteInZuordnungsArray(punkteZuordnungen: Array<PunkteZuordnung>, multiplikator: number): void {
+        punkteZuordnungen.map((a) => {
+            a.setPunkte(a.getPunkte() * multiplikator);
+        });
     }
 }
