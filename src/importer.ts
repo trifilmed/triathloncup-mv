@@ -22,8 +22,8 @@ export class CSVErgebnisImporter implements ErgebnisImporter {
 
                     if(zeile.Name) {
                         let namensArray: Array<string> = zeile.Name.split(',');
-                        vorname = namensArray[0];
-                        name = namensArray[1].trim();
+                        name = namensArray[0];
+                        vorname = namensArray[1].trim();
                     } else {
                         vorname = zeile.Vorname;
                         name = zeile.Nachname;
@@ -58,9 +58,9 @@ export class CSVErgebnisImporter implements ErgebnisImporter {
         let existiert = false;
 
         for (let athlet of athleten) {
-            if (athlet.getVorname() == vorname
-                && athlet.getName() == nachname
-                && athlet.getAltersklasse() == altersklasse) {
+            if (athlet.getVorname().toLowerCase() === vorname.toLowerCase()
+                && athlet.getName().toLowerCase() === nachname.toLowerCase()
+                ) {
                 existiert = true;
             }
         }
@@ -70,9 +70,9 @@ export class CSVErgebnisImporter implements ErgebnisImporter {
 
     private findeAthlet(vorname: string, nachname: string, altersklasse: string, athleten: Array<Athlet>): Athlet {
         for (let athlet of athleten) {
-            if (athlet.getVorname() == vorname
-                && athlet.getName() == nachname
-                && athlet.getAltersklasse() == altersklasse) {
+            if (athlet.getVorname().toLowerCase() === vorname.toLowerCase()
+                && athlet.getName().toLowerCase() === nachname.toLowerCase()
+                ) {
                 return athlet;
             }
         }

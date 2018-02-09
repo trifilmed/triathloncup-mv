@@ -41,7 +41,7 @@ export class Main {
 let main = new Main();
 let finalesErgebnisPromise = main.makeCupBerechnung();
 finalesErgebnisPromise
-    .then((cupErgebnis: Array<CupErgebnis>) => {
+    .then((cupErgebnis: Array<CupErgebnis>) => {        
         console.log(cupErgebnis);
     })
     .catch((e: any) => {
