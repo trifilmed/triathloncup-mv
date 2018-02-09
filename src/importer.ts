@@ -17,8 +17,18 @@ export class CSVErgebnisImporter implements ErgebnisImporter {
             csv({ noheader: false })
                 .fromFile(pathName)
                 .on('json', (zeile: any) => {
-                    let vorname: string = zeile.Vorname;
-                    let name: string = zeile.Nachname;
+                    let vorname: string;
+                    let name: string;
+
+                    if(zeile.Name) {
+                        let namensArray: Array<string> = zeile.Name.split(',');
+                        vorname = namensArray[0];
+                        name = namensArray[1].trim();
+                    } else {
+                        vorname = zeile.Vorname;
+                        name = zeile.Nachname;
+                    }
+
                     let altersklasse: string = zeile.Ak;
                     let altersklassenRang: number = zeile.AkRang;
                     let athlet: Athlet;

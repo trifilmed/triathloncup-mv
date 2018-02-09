@@ -1,4 +1,5 @@
 import { Wettkampf, KonkreterWettkampf } from "./wettkampf";
+import { wettkaempfe as jsonWettkaempfe } from "./json/wettkaempfe";
 
 export interface Repository {
     getWettkaempfe(): Array<Wettkampf>;
@@ -14,27 +15,6 @@ export class RepositoryFactory {
 
 export class JSONRepository implements Repository {
     public getWettkaempfe(): Array<Wettkampf> {
-        let jsonWettkaempfe = [
-            {
-                "name": "Güstrower Triathlon",
-                "landesmeisterschaft": false,
-                "jahr": 2017,
-                "dateiname": "test1"
-            },
-            {
-                "name": "Warener Triathlon",
-                "landesmeisterschaft": true,
-                "jahr": 2017,
-                "dateiname": "test2"
-            },
-            {
-                "name": "Rostocker Triathlon",
-                "landesmeisterschaft": true,
-                "jahr": 2017,
-                "dateiname": "test3"
-            }
-        ];
-
         let wettkaempfe: Array<Wettkampf> = [];
 
         for (let i = 0; i < jsonWettkaempfe.length; i++) {
