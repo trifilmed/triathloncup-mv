@@ -23,6 +23,10 @@ export class Berechner2017 implements Berechner {
     public berechne(wettkaempfe: Array<Wettkampf>): Array<CupErgebnis> {
         let cupErgebnisArray: Array<CupErgebnis> = [];
 
+        /*
+            Erstellen der CupErgebnisse:
+                Beinhalten für jeden Athleten die Punkte die er im einzelnen Wettkampf erlangt hat.
+        */
         for (let i = 0; i < wettkaempfe.length; i++) {
             let wettkampf: Wettkampf = wettkaempfe[i];
             let wettkampfErgebnis: Array<WettkampfErgebnis> = wettkaempfe[i].getErgebnis();
@@ -72,12 +76,22 @@ export class Berechner2017 implements Berechner {
             if (landesmeisterschaftsArray.length > 3) {
                 let zuNichtLandesmeisterschaftHinzufuegen: Array<PunkteZuordnung> = landesmeisterschaftsArray.slice(3);
                 landesmeisterschaftsArray.splice(0, (landesmeisterschaftsArray.length - 3))
+                nichtLandesmeisterschaftsArray.concat(zuNichtLandesmeisterschaftHinzufuegen);
             }
 
             nichtLandesmeisterschaftsArray.sort((a: any, b: any) => {
                 return a - b;
             });
 
+            let allePunkteZuordnungenEinesAthleten: Array<PunkteZuordnung> = landesmeisterschaftsArray.concat(nichtLandesmeisterschaftsArray);
+
+            let gesamtPunkte: number = 0;
+            allePunkteZuordnungenEinesAthleten.map((a) => {
+                gesamtPunkte += a.getPunkte();
+            });
+
+            cupErgebnis.setGesamtPunkte(gesamtPunkte);
+            cupErgebnis.setPunkteZuordnungNachBerechnung(allePunkteZuordnungenEinesAthleten);
         }
         // Alle Landesmeisterschaften in ein Array & sortieren
         // Alle Nicht-Landesmeisterschafen in ein zweites Array & sortieren
@@ -86,7 +100,8 @@ export class Berechner2017 implements Berechner {
         // Beide Arrays konkatenieren, sortieren und nach 9 abschneiden
         for (let cupe of cupErgebnisArray) {
             console.log(cupe.getAthlet());
-            console.log(cupe.getPunkteZuordnung());
+            console.log(cupe.getGesamtPunkte());
+            console.log(cupe.getPunkteZuordnungNachBerechnung());
         }
     }
 
