@@ -41,8 +41,18 @@ export class Main {
 let main = new Main();
 let finalesErgebnisPromise = main.makeCupBerechnung();
 finalesErgebnisPromise
-    .then((cupErgebnis: Array<CupErgebnis>) => {        
-        console.log(cupErgebnis);
+    .then((cupErgebnis: Array<CupErgebnis>) => { 
+        let first: Athlet;
+        let second: Athlet;
+        let count: number = 0;   
+       
+        for(let cupe of cupErgebnis) {
+            if(cupe.getAthlet().getName() == 'Au') {
+                console.log(cupe.getPunkteZuordnungNachBerechnung(), cupe.getGesamtPunkte());
+            }
+        }
+
+        // console.log(cupErgebnis);
     })
     .catch((e: any) => {
         console.log(e);

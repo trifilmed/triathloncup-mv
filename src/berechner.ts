@@ -83,9 +83,11 @@ export class Berechner2017 implements Berechner {
             this.sortiereArrayAbsteigend(landesmeisterschaftsArray);
 
             if (landesmeisterschaftsArray.length > 3) {
-                let zuNichtLandesmeisterschaftHinzufuegen: Array<PunkteZuordnung> = landesmeisterschaftsArray.slice(3);
-                landesmeisterschaftsArray.splice(0, (landesmeisterschaftsArray.length - 3))
-                nichtLandesmeisterschaftsArray.concat(zuNichtLandesmeisterschaftHinzufuegen);
+                let zuNichtLandesmeisterschaftHinzufuegen: Array<PunkteZuordnung> = landesmeisterschaftsArray.slice(3, landesmeisterschaftsArray.length);
+
+                landesmeisterschaftsArray = landesmeisterschaftsArray.slice(0,3);
+
+                nichtLandesmeisterschaftsArray = nichtLandesmeisterschaftsArray.concat(zuNichtLandesmeisterschaftHinzufuegen);
             }
 
             this.sortiereArrayAbsteigend(nichtLandesmeisterschaftsArray);
@@ -93,6 +95,10 @@ export class Berechner2017 implements Berechner {
             this.multiplizierePunkteInZuordnungsArray(landesmeisterschaftsArray,2);
 
             let allePunkteZuordnungenEinesAthleten: Array<PunkteZuordnung> = landesmeisterschaftsArray.concat(nichtLandesmeisterschaftsArray);
+
+            this.sortiereArrayAbsteigend(allePunkteZuordnungenEinesAthleten);
+
+            allePunkteZuordnungenEinesAthleten = allePunkteZuordnungenEinesAthleten.slice(0,9);
 
             let gesamtPunkte: number = this.berechneGesamtpunkte(allePunkteZuordnungenEinesAthleten);
 

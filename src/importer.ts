@@ -8,11 +8,12 @@ export interface ErgebnisImporter {
 }
 
 export class CSVErgebnisImporter implements ErgebnisImporter {
+    private athleten: Array<Athlet> = [];
 
     public import(source: string): Promise<Array<WettkampfErgebnis>> {
         let pathName = path.join(__dirname, '../csv/' + source + '.csv');
         return new Promise((resolve: any, reject: any) => {
-            let athleten: Array<Athlet> = [];
+            // let athleten: Array<Athlet> = [];
             let wettkampfErgebnisArray: Array<WettkampfErgebnis> = [];
             csv({ noheader: false })
                 .fromFile(pathName)
@@ -34,14 +35,8 @@ export class CSVErgebnisImporter implements ErgebnisImporter {
                     let athlet: Athlet;
                     let wettkampfErgebnis: WettkampfErgebnis;
 
-                    if (this.athletExistiert(vorname, name, altersklasse, athleten)) {
-                        athlet = this.findeAthlet(vorname, name, altersklasse, athleten);
-                    } else {
-                        athlet = new KonkreterAthlet(vorname, name, altersklasse);
-                    }
-
-                    athleten.push(athlet);
-
+                    athlet = this.bekommeAthlet(vorname, name, altersklasse);
+                    
                     wettkampfErgebnis = new WettkampfErgebnis(athlet, altersklassenRang);
                     wettkampfErgebnisArray.push(wettkampfErgebnis);
                 })
@@ -54,27 +49,26 @@ export class CSVErgebnisImporter implements ErgebnisImporter {
         });
     }
 
-    private athletExistiert(vorname: string, nachname: string, altersklasse: string, athleten: Array<Athlet>): boolean {
-        let existiert = false;
+    private bekommeAthlet(vorname: string, nachname: string, altersklasse: string): Athlet {
+        let existiert: boolean = false;
+        let rueckgabeAthlet: Athlet;
 
-        for (let athlet of athleten) {
-            if (athlet.getVorname().toLowerCase() === vorname.toLowerCase()
-                && athlet.getName().toLowerCase() === nachname.toLowerCase()
-                ) {
-                existiert = true;
+        for (let athlet of this.athleten) {
+           if (athlet.getVorname().toLowerCase() == vorname.toLowerCase()
+                && athlet.getName().toLowerCase() == nachname.toLowerCase()
+                && athlet.getAltersklasse() == altersklasse) {
+                    existiert = true;
+                    rueckgabeAthlet = athlet;
             }
         }
 
-        return existiert;
-    }
+        if(existiert) {
+            return rueckgabeAthlet;
+        } else {
+            rueckgabeAthlet = new KonkreterAthlet(vorname,nachname,altersklasse);
+            this.athleten.push(rueckgabeAthlet);
 
-    private findeAthlet(vorname: string, nachname: string, altersklasse: string, athleten: Array<Athlet>): Athlet {
-        for (let athlet of athleten) {
-            if (athlet.getVorname().toLowerCase() === vorname.toLowerCase()
-                && athlet.getName().toLowerCase() === nachname.toLowerCase()
-                ) {
-                return athlet;
-            }
+            return rueckgabeAthlet;
         }
     }
 }
