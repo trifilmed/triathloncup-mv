@@ -4,9 +4,10 @@ import { ErgebnisImporter, CSVErgebnisImporter } from './importer';
 import { RepositoryFactory, Repository } from './repository';
 import { Wettkampf } from './wettkampf';
 import { Ergebnis, CupErgebnis, WettkampfErgebnis } from './ergebnis';
+import * as fs from 'fs';
 
 export class Main {
-    public makeCupBerechnung(): Promise<Array<CupErgebnis>> {
+    public static makeCupBerechnung(): Promise<Array<CupErgebnis>> {
         return new Promise((resolve, reject) => {
             let repository: Repository = RepositoryFactory.makeRepository('json');
             let wettkaempfe: Array<Wettkampf> = repository.getWettkaempfe();
@@ -38,22 +39,18 @@ export class Main {
     }
 }
 
-let main = new Main();
-let finalesErgebnisPromise = main.makeCupBerechnung();
-finalesErgebnisPromise
-    .then((cupErgebnis: Array<CupErgebnis>) => { 
-        let first: Athlet;
-        let second: Athlet;
-        let count: number = 0;   
-       
-        for(let cupe of cupErgebnis) {
-            if(cupe.getAthlet().getName() == 'Au') {
-                console.log(cupe.getPunkteZuordnungNachBerechnung(), cupe.getGesamtPunkte());
-            }
-        }
-
-        // console.log(cupErgebnis);
-    })
-    .catch((e: any) => {
-        console.log(e);
-    });
+// let finalesErgebnisPromise = Main.makeCupBerechnung();
+// finalesErgebnisPromise
+//     .then((cupErgebnis: Array<CupErgebnis>) => {    
+//         fs.writeFile("./src/json/cupergebnis.json",JSON.stringify(cupErgebnis), (e: any) => {
+//             if (e) {
+//                 console.log(e);
+//                 return;
+//             } else {
+//                 console.log("CupErgebnis wurde gespeichert!");
+//             }
+//         });
+//     })
+//     .catch((e: any) => {
+//         console.log(e);
+//     });
