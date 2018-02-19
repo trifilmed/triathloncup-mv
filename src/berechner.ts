@@ -76,12 +76,16 @@ export abstract class Berechner {
     protected setzeGesamtPlatzierungen(sortiertesArray: Array<CupErgebnis>): Array<CupErgebnis> {
         let aktuellePlatzierung: number = 1;
         let aktuellePunktzahl: number = sortiertesArray[0].getGesamtPunkte();
+        let gleichplatzierte: number = 0;
         
         for(let cupErgebnis of sortiertesArray) {
             if(cupErgebnis.getGesamtPunkte() == aktuellePunktzahl) {
+                gleichplatzierte++;
                 cupErgebnis.setGesamtPlatzierung(aktuellePlatzierung);
             } else if(cupErgebnis.getGesamtPunkte() < aktuellePunktzahl) {
-                aktuellePlatzierung++;
+                aktuellePlatzierung = aktuellePlatzierung + gleichplatzierte;
+                gleichplatzierte = 1;
+                aktuellePunktzahl = cupErgebnis.getGesamtPunkte();
                 cupErgebnis.setGesamtPlatzierung(aktuellePlatzierung);
             }
         }
