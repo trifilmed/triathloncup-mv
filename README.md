@@ -6,10 +6,12 @@ Transpilieren mit dem Befehl
 tsc
 ```
 
-Ausführen mit dem Befehl
+Starten des Servers mit dem Befehl
 ```
 npm run start
 ```
+
+Das CupErgebnis ist über `localhost:3000/cupergebnis` als JSON abrufbar.
 
 ## Ergebnislisten
 Die Ergebnislisten werden im `dist/csv` Ordner hinterlegt. In der Konfiguration der Wettkämpfe wird der jeweilige Dateiname ohne Endung angegeben. Die CSV-Dateien müssen mindestens folgende Spalten im Header bereitstellen:

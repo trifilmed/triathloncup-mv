@@ -32,6 +32,7 @@ export class CupErgebnis implements Ergebnis {
     private punkteZuordnung: Array<PunkteZuordnung> = [];
     private punkteZuordnungNachBerechnung: Array<PunkteZuordnung> = [];
     private gesamtPunkte: number;
+    private gesamtPlatzierung: number;
 
     constructor(athlet: Athlet, punkteZuordnung: PunkteZuordnung) {
         this.athlet = athlet;
@@ -65,6 +66,14 @@ export class CupErgebnis implements Ergebnis {
     public getPunkteZuordnungNachBerechnung(): Array<PunkteZuordnung> {
         return this.punkteZuordnungNachBerechnung;
     }
+
+    public getGesamtPlatzierung(): number {
+        return this.gesamtPlatzierung;
+    }
+
+    public setGesamtPlatzierung(gesamtPlatzierung: number): void {
+        this.gesamtPlatzierung = gesamtPlatzierung;
+    } 
 }
 
 export class WettkampfErgebnis implements Ergebnis {

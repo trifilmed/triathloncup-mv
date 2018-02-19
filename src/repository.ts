@@ -1,8 +1,9 @@
 import { Wettkampf, KonkreterWettkampf } from "./wettkampf";
 import { wettkaempfe as jsonWettkaempfe } from "./json/wettkaempfe";
+import { json } from "body-parser";
 
 export interface Repository {
-    getWettkaempfe(): Array<Wettkampf>;
+    getWettkaempfe(jahr: number): Array<Wettkampf>;
 }
 
 export class RepositoryFactory {
@@ -14,12 +15,19 @@ export class RepositoryFactory {
 }
 
 export class JSONRepository implements Repository {
-    public getWettkaempfe(): Array<Wettkampf> {
+    public getWettkaempfe(jahr?: number): Array<Wettkampf> {
         let wettkaempfe: Array<Wettkampf> = [];
 
         for (let i = 0; i < jsonWettkaempfe.length; i++) {
-            let wettkampf = new KonkreterWettkampf(jsonWettkaempfe[i].name, jsonWettkaempfe[i].landesmeisterschaft, jsonWettkaempfe[i].jahr, jsonWettkaempfe[i].dateiname);
-            wettkaempfe.push(wettkampf);
+            if (jahr) {
+                if (jsonWettkaempfe[i].jahr == jahr) {
+                    let wettkampf = new KonkreterWettkampf(jsonWettkaempfe[i].name, jsonWettkaempfe[i].landesmeisterschaft, jsonWettkaempfe[i].jahr, jsonWettkaempfe[i].dateiname);
+                    wettkaempfe.push(wettkampf);
+                }
+            } else {
+                let wettkampf = new KonkreterWettkampf(jsonWettkaempfe[i].name, jsonWettkaempfe[i].landesmeisterschaft, jsonWettkaempfe[i].jahr, jsonWettkaempfe[i].dateiname);
+                wettkaempfe.push(wettkampf);
+            }
         }
 
         return wettkaempfe;
