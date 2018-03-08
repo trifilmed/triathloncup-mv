@@ -21,7 +21,8 @@ export class Utils {
                 let wettkampf = {
                     "name": wettkampfDerZuordnung.getName(),
                     "landesmeisterschaft": wettkampfDerZuordnung.getLandesmeisterschaft(),
-                    "punkteDesAthleten": punkteZuordnung.getPunkte()
+                    "punkteDesAthleten": punkteZuordnung.getPunkte(),
+                    "wertungsFaktor": punkteZuordnung.getWertungsfaktor()
                 }
 
                 wettkaempfe.push(wettkampf);

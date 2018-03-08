@@ -8,6 +8,7 @@ export interface Ergebnis {
 export class PunkteZuordnung {
     private wettkampf: Wettkampf;
     private punkte: number;
+    private wertungsFaktor: number;
 
     constructor(wettkampf: Wettkampf, punkte: number) {
         this.wettkampf = wettkampf;
@@ -24,6 +25,14 @@ export class PunkteZuordnung {
 
     public getWettkampf(): Wettkampf {
         return this.wettkampf;
+    }
+
+    public setWertungsfaktor(faktor: number): void {
+        this.wertungsFaktor = faktor;
+    }
+
+    public getWertungsfaktor(): number {
+        return this.wertungsFaktor;
     }
 }
 

@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { Main } from './main';
 import { CupErgebnis } from './ergebnis';
+import { Repository, RepositoryFactory } from './repository';
 
 class App {
   public express: any;
@@ -21,6 +22,13 @@ class App {
         .catch((e: any) => {
           res.send("Die Berechnung ist leider fehlgeschlagen" + e);
         });
+    });
+
+    router.get('/wettkaempfe/:jahr', (req: any, res: any) => {
+      let jahr: number = req.params.jahr;
+
+      let repository: Repository = RepositoryFactory.makeRepository("json");
+      res.send(repository.getWettkaempfe(jahr));
     });
 
     this.express.use((req: any,res: any,next: any) => {

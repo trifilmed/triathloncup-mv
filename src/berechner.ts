@@ -92,6 +92,30 @@ export abstract class Berechner {
 
         return sortiertesArray;
     }
+
+    protected setzeWertungsfaktor(zuordnungsArray: Array<PunkteZuordnung>, faktor: number): Array<PunkteZuordnung> {
+        let returnZuordnungsArray: Array<PunkteZuordnung> = [];
+        
+        for(let zuordnung of zuordnungsArray) {
+            zuordnung.setWertungsfaktor(faktor);
+            returnZuordnungsArray.push(zuordnung);
+        }
+
+        return returnZuordnungsArray;
+    }
+
+    protected loescheAltersklassen(cupErgebnisArray: Array<CupErgebnis>, altersklassenArray: Array<string>): Array<CupErgebnis> {
+        let returnCupErgebnisArray: Array<CupErgebnis> = [];
+
+        for(let cupErgebnis of cupErgebnisArray) {
+            let aktuelleAltersklasse = cupErgebnis.getAthlet().getAltersklasse();
+            if(altersklassenArray.indexOf(aktuelleAltersklasse) == -1) {
+                returnCupErgebnisArray.push(cupErgebnis);
+            }
+        }
+
+        return returnCupErgebnisArray;
+    }
 }
 
 /*
@@ -242,7 +266,9 @@ export class Berechner2018 extends Berechner implements Berechner {
                 }
             }
 
-            landesmeisterschaftsArray = this.sortiereArrayAbsteigend(landesmeisterschaftsArray);
+            if(landesmeisterschaftsArray.length > 1) {
+                landesmeisterschaftsArray = this.sortiereArrayAbsteigend(landesmeisterschaftsArray);
+            }
 
             if (landesmeisterschaftsArray.length > 2) {
                 let zuNichtLandesmeisterschaftHinzufuegen: Array<PunkteZuordnung> = landesmeisterschaftsArray.slice(2, landesmeisterschaftsArray.length);
@@ -253,22 +279,30 @@ export class Berechner2018 extends Berechner implements Berechner {
             }
 
             nichtLandesmeisterschaftsArray = this.sortiereArrayAbsteigend(nichtLandesmeisterschaftsArray);
+            nichtLandesmeisterschaftsArray = this.setzeWertungsfaktor(nichtLandesmeisterschaftsArray,1);
 
             this.multiplizierePunkteInZuordnungsArray(landesmeisterschaftsArray,2);
+            landesmeisterschaftsArray = this.setzeWertungsfaktor(landesmeisterschaftsArray,2);
 
             let allePunkteZuordnungenEinesAthleten: Array<PunkteZuordnung> = landesmeisterschaftsArray.concat(nichtLandesmeisterschaftsArray);
 
             this.sortiereArrayAbsteigend(allePunkteZuordnungenEinesAthleten);
 
-            allePunkteZuordnungenEinesAthleten = allePunkteZuordnungenEinesAthleten.slice(0,7);
+            let gewertetePunkteZuordnungenEinesAthleten = allePunkteZuordnungenEinesAthleten.slice(0,7);
+            let nichtGewertetePunkteZuordnungenEinesAthleten = allePunkteZuordnungenEinesAthleten.slice(7,allePunkteZuordnungenEinesAthleten.length);
+            nichtGewertetePunkteZuordnungenEinesAthleten = this.setzeWertungsfaktor(nichtGewertetePunkteZuordnungenEinesAthleten,0);
 
-            let gesamtPunkte: number = this.berechneGesamtpunkte(allePunkteZuordnungenEinesAthleten);
+            allePunkteZuordnungenEinesAthleten = gewertetePunkteZuordnungenEinesAthleten.concat(nichtGewertetePunkteZuordnungenEinesAthleten);
+
+            let gesamtPunkte: number = this.berechneGesamtpunkte(gewertetePunkteZuordnungenEinesAthleten);
 
             cupErgebnis.setGesamtPunkte(gesamtPunkte);
             cupErgebnis.setPunkteZuordnungNachBerechnung(allePunkteZuordnungenEinesAthleten);
         }
 
-        cupErgebnisArray = this.setzeGesamtPlatzierungen(cupErgebnisArray);
+        let bereinigtesArray = this.loescheAltersklassen(cupErgebnisArray,['M14','W14','M16','W16','M18','W18']);
+        let sortiertesArray = this.sortiereNachGesamtPunkten(bereinigtesArray);
+        cupErgebnisArray = this.setzeGesamtPlatzierungen(sortiertesArray);
 
         return cupErgebnisArray;
     }

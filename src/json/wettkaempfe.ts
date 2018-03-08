@@ -70,5 +70,17 @@ export let wettkaempfe: any = [
         "dateiname": 'warenTriathlon',
         "jahr": 2017,
         "landesmeisterschaft": true
+    },
+    {
+        "name": "Wintertriathlon Neubrandenburg",
+        "dateiname": 'wintertriathlon_neubrandenburg_2018',
+        "jahr": 2018,
+        "landesmeisterschaft": false
+    },
+    {
+        "name": "Swim & Run Güstrow",
+        "dateiname": 'swim_and_run_guestrow_2018',
+        "jahr": 2018,
+        "landesmeisterschaft": true
     }
 ];
