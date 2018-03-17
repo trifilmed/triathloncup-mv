@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jasmine",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node dist/src/server.js"
   },
   "author": "",
@@ -14,16 +14,13 @@
     "@types/csvtojson": "^1.1.5",
     "csvtojson": "^1.1.9",
     "path": "^0.12.7",
-    "ts-loader": "^3.2.0",
-    "tsc": "^1.20150623.0",
-    "typescript": "^2.6.2"
+    "ts-loader": "^3.5.0",
+    "typescript": "2.4.2"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.20",
-    "@types/core-js": "^0.9.36",
     "@types/express": "^4.11.1",
     "@types/jasmine": "^2.8.6",
-    "express": "^4.16.2",
-    "jasmine": "^2.9.0"
+    "express": "^4.16.3",
+    "jasmine": "^2.99.0"
   }
 }

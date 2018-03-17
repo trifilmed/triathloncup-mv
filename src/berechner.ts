@@ -19,7 +19,7 @@ export interface Berechner {
     berechne(wettkaempfe: Array<Wettkampf>): Array<CupErgebnis>;
 }
 
-export abstract class Berechner {
+abstract class BerechnerHelfer {
     protected anzahlAthletenEinerAk(ak: string, wettkampf: Wettkampf): number {
         let athletenEinerAk: Array<Athlet> = [];
         let ergebnis: Array<WettkampfErgebnis> = wettkampf.getErgebnis();
@@ -129,7 +129,7 @@ export abstract class Berechner {
     Elemente in Landesmeisterschafts-Array verdoppeln
     Beide Arrays konkatenieren, sortieren und nach 9 abschneiden
 */
-export class Berechner2017 extends Berechner implements Berechner {
+export class Berechner2017 extends BerechnerHelfer implements Berechner {
     private punkteListe: Array<number> = [50, 40, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2];
 
     public berechne(wettkaempfe: Array<Wettkampf>): Array<CupErgebnis> {
@@ -214,7 +214,7 @@ export class Berechner2017 extends Berechner implements Berechner {
     }
 }
 
-export class Berechner2018 extends Berechner implements Berechner {
+export class Berechner2018 extends BerechnerHelfer implements Berechner {
     private punkteListe: Array<number> = [50, 40, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2];
 
     public berechne(wettkaempfe: Array<Wettkampf>): Array<CupErgebnis> {

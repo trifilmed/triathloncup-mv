@@ -9,7 +9,7 @@ import * as fs from 'fs';
 
 export class Main {
     public static makeCupBerechnung(jahr: number): Promise<Array<any>> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve: any, reject: any) => {
             let repository: Repository = RepositoryFactory.makeRepository('json');
             let wettkaempfe: Array<Wettkampf> = repository.getWettkaempfe(jahr);
             let importer: ErgebnisImporter = new CSVErgebnisImporter();
